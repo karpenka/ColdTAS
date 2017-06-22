@@ -102,40 +102,42 @@ double L_V=1;
 
 //v_cavity SWISS
 double m_hori=3;
-double m_vert=3;  
+double m_vert=3; 
 double ldm;
 double ldx;
 double D_W;
 double D_H;
-double Lam=5.0; 
-double dLam=3.0; 
+double Lam=5.0;
+double dLam=3.0;
 //double m_hori=3.0;
-//double m_vert=3.0;  
+//double m_vert=3.0;
 double W;
-double Length_V; 
+double Length_V;
 double d_Fe=0.7e-5;
 double v_index;
 
 //Beam distribution
-double distance = 0.35;
+double distance = 0.31;
 
 %}
 
 
 INITIALIZE
 %{
-lambda_min = 1.75;
-lambda_max = 6.25;
+//lambda_min = 1.75;
+//lambda_max = 6.25;
+lambda_min = 0.01;
+lambda_max = 10;
 R=pow((12-l_tapering)/1.4,2)/8/g_w*number_channels;
 //L=12-l_tapering-Length_VV;
 L=12-l_tapering;
 //v_cavity
 //Length_V=Length_VV/NV;
-ldm = Lam-dLam;  
-ldx = Lam+dLam;  
+ldm = Lam-dLam;
+ldx = Lam+dLam;
 W=g_w;
-D_W = 1.2*W; 
-D_H = 1.2*H; 
+D_W = 1.2*W;
+D_H = 1.2*H;
 %}
 
 TRACE
@@ -146,8 +148,8 @@ AT (0 ,0 , -total_nonoptics_length) ABSOLUTE
 /* ******************************* Source *************************************/
 
 COMPONENT Source = Source_gen ( focus_xw =  g_w ,
-focus_yh = channel_height , dist = total_nonoptics_length , I1 = source_I1 ,
-yheight = source_height , xwidth = source_width , verbose = 1 ,
+focus_yh = channel_height , dist = total_nonoptics_length , I1 = source_I1,
+yheight = source_height , xwidth = source_width , verbose = 1,
 T1 = source_T1, Lmin = lambda_min, Lmax = lambda_max,
 T2 = source_T2 , I2 = source_I2 , T3 = source_T3 ,
 I3 = source_I3)
@@ -155,9 +157,9 @@ AT (0 , 0 , -total_nonoptics_length) RELATIVE ABSOLUTE
 
 /* ******************************* make spin for Swiss V-cavity *************************************/
 /*
-COMPONENT makeSpin = Spin_random()  
-  AT (0,0,0.001) RELATIVE Source  
-  ROTATED (0,0,0)  RELATIVE Source  
+COMPONENT makeSpin = Spin_random()
+  AT (0,0,0.001) RELATIVE Source
+  ROTATED (0,0,0)  RELATIVE Source
 
 /* ************************************************************************************************/
 
@@ -165,10 +167,20 @@ COMPONENT Source_arm = Arm(
     )
   AT (0, 0, 0) RELATIVE ABSOLUTE
 
-/*
+
 COMPONENT monit_source = Monitor_nD(
-    xwidth = g_w, yheight = H, options = "lambda limits=[1.8 6.2]",
-    filename = "source")
+    xwidth = g_w, yheight = H, options = "lambda limits=[0 9.9]",
+    filename = "source",bins = 100)
+  AT (0, 0, 0.0001) RELATIVE PREVIOUS
+
+COMPONENT monit_source_E = Monitor_nD(
+    xwidth = g_w, yheight = H, options = "energy",
+    filename = "source",bins = 100)
+  AT (0, 0, 0.0001) RELATIVE PREVIOUS
+
+COMPONENT monit_source_xy = Monitor_nD(
+    xwidth = g_w, yheight = H, options = "x y",
+    filename = "source",bins = 100)
   AT (0, 0, 0.0001) RELATIVE PREVIOUS
 
 /* ******************************* First guide, unchangeable *************************************/
@@ -192,23 +204,23 @@ COMPONENT monit_before_monocr = Monitor_nD(
     xwidth = g_w, yheight = H, filename = "after_guide", options="lambda limits=[1.8 6.2]")
   AT (0, 0, L+0.001 ) RELATIVE PREVIOUS
 
-/* ******************************* V-cavity  *************************************/    
+/* ******************************* V-cavity  *************************************/
 
-COMPONENT a_POL = Arm()  
+COMPONENT a_POL = Arm()
   AT (0,0,d+0.01+ L)   RELATIVE CG_1
   ROTATED (0,0,0)  RELATIVE CG_1
 
-/* ******************************* McStas both sides coated with FeSi m=5.0  *************************************/    
+/* ******************************* McStas both sides coated with FeSi m=5.0  *************************************/
 /*
 COMPONENT Polarizer = Pol_guide_vmirror(
     xwidth = g_w, yheight = H,
-    length = L_V, debug=0, 		  
+    length = L_V, debug=0,
     rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
     rUpPar = {1, 0.0219, 0.6, 5, 0.003},
     rDownPar ={1, 0.0137, 0, 1.2, 0.001})
   AT (0, 0, 0.001) RELATIVE a_POL
 
-/* ******************************* 1_6  *************************************/    
+/* ******************************* 1_6  *************************************/ 
 /*
 COMPONENT Polarizer = Pol_guide_vmirror(
     xwidth = g_w/6, yheight = H,
@@ -294,10 +306,10 @@ COMPONENT  cavity  = Transmission_V_polarisator(
 
 /**********************************arm**************************************************/
 /*
-COMPONENT armLambdaStop = Arm()  
-     AT (0, 0, 0.002+L_V)   
+COMPONENT armLambdaStop = Arm()
+     AT (0, 0, 0.002+L_V)
      RELATIVE a_POL
- 
+
 /**********************************monitors after cavity**************************************************/
 /*
 COMPONENT monn = Monitor_nD(
@@ -309,7 +321,7 @@ COMPONENT monit_before_monocr2 = Monitor_nD(
   AT (0, 0, 0.001 ) RELATIVE PREVIOUS
 
 
-/* ******************************* Elliptical guide  *************************************/    
+/* ******************************* Elliptical guide  *************************************/
 
 COMPONENT CG_tap = Guide_tapering(
     option = "elliptical", w1 = g_w, h1 = H, l = l_tapering,
@@ -317,16 +329,16 @@ COMPONENT CG_tap = Guide_tapering(
   AT (0, 0, 0.01) RELATIVE PREVIOUS
 
 
-/* ******************************* V-selector  *************************************/    
-
+/* ******************************* V-selector  *************************************/
+/*
 COMPONENT v_selec = V_selector(
     xwidth = width_selector, yheight = H, zdepth = 0.3, radius = 0.3,
     alpha = 48.298, length = 0.25, d = 0.0004,
     nu = 3956*48.298*DEG2RAD/2/PI/lambda/0.25, nslit = 72)
   AT (0, 0, 0.15+ l_tapering) RELATIVE PREVIOUS
 
-/* ******************************* Monitors on Virtual Source  *************************************/    
-
+/* ******************************* Monitors on Virtual Source  *************************************/
+/*
 COMPONENT monit_slit_lambda = Monitor_nD(
     xwidth = width_slit, yheight = H, filename = "virtual_source", options="lambda limits=[2.5 3.5]",bins = 50)
   AT (0, 0, l_focus_tapering+l_tapering+0.01) RELATIVE CG_tap
@@ -337,21 +349,25 @@ COMPONENT monit_slit_lambda = Monitor_nD(
   AT (0, 0, l_focus_tapering+l_tapering+0.01) RELATIVE CG_tap
 
 /*
-COMPONENT MPLMon2Y =  
-MeanPolLambda_monitor(xwidth=D_W, yheight=D_H,  
-		      nL=100,  Lmin = Lam-dLam-1, Lmax = Lam+dLam+1,   
-		      mx=0, my=-1, mz=0, filename="MPLMon2Y.data")  
+COMPONENT MPLMon2Y =
+MeanPolLambda_monitor(xwidth=D_W, yheight=D_H,
+		      nL=100,  Lmin = Lam-dLam-1, Lmax = Lam+dLam+1, 
+		      mx=0, my=-1, mz=0, filename="MPLMon2Y.data") 
   AT (0, 0, l_focus_tapering+l_tapering+0.011) RELATIVE CG_tap
 */
-/*
+
 COMPONENT monit_slit_x = Monitor_nD(
     xwidth =  g_w+0.02, yheight = 0.25, options = "x", bins=100)
+  AT (0, 0, distance+l_tapering+0.01) RELATIVE CG_tap
+
+COMPONENT monit_slit_y = Monitor_nD(
+    xwidth =  g_w+0.02, yheight = 0.25, options = "y", bins=100)
   AT (0, 0, distance+l_tapering+0.01) RELATIVE CG_tap
 /*
 COMPONENT monit_slit_xy = Monitor_nD(
     xwidth =  g_w, yheight = 0.25, options = "x y", bins=100)
   AT (0, 0, 0.001) RELATIVE PREVIOUS
-
+*/
 COMPONENT monit_slit_dx = Monitor_nD(
     xwidth =  width_slit, yheight = H, options = "dx", bins=100)
   AT (0, 0, 0001) RELATIVE PREVIOUS
@@ -360,15 +376,23 @@ COMPONENT monit_slit_dy = Monitor_nD(
     xwidth =  width_slit, yheight = H, options = "dy", bins=100)
   AT (0, 0, 0001) RELATIVE PREVIOUS
 
-/* ******************************* Slit  *************************************/    
+COMPONENT monit_slit_dE = Monitor_nD(
+    xwidth =  width_slit, yheight = H, options = "E", bins=100)
+  AT (0, 0, 0001) RELATIVE PREVIOUS
 
+COMPONENT monit_slit_dL = Monitor_nD(
+    xwidth =  width_slit, yheight = H, options = "lambda limits=[1.8 6.2]", bins=100)
+  AT (0, 0, 0001) RELATIVE PREVIOUS
+
+/* ******************************* Slit  *************************************/
+/*
 COMPONENT slit_VS = Slit(
     xwidth = width_slit, yheight = H)
   AT (0, 0, l_focus_tapering+l_tapering+0.01) RELATIVE CG_tap
 
 
-/* ******************************* Monochromator  *************************************/     
-
+/* ******************************* Monochromator  *************************************/
+/*
 
 COMPONENT mon_IN = Arm(
     )
@@ -398,15 +422,20 @@ COMPONENT mon_pol = Monochromator_pol(
  ROTATED (0, -asin(lambda/2/d_lattice_parameter)*RAD2DEG, 0) RELATIVE mon_IN
 
 
-/* *****************************************************************************************/     
-
+/* *****************************************************************************************/
+/*
 COMPONENT mon_OUT = Arm(
     )
   AT (0, 0, l_focus_tapering+VS1+l_tapering) RELATIVE CG_tap
   ROTATED (0, -2*asin(lambda/2/d_lattice_parameter)*RAD2DEG, 0) RELATIVE CG_tap
-
+/*
 COMPONENT monit_sample_position = Monitor_nD(
     xwidth = 0.01, yheight = 0.01, filename = "sample", options="lambda limits=[2.8 3.2]",bins=35)
+  AT (0, 0, VS) RELATIVE PREVIOUS
+*/
+/*
+COMPONENT monit_sample_position_xy = Monitor_nD(
+    xwidth = 0.1, yheight = 0.1, filename = "sample", options="x y")
   AT (0, 0, VS) RELATIVE PREVIOUS
 /*
 COMPONENT monit = Monitor_nD(
@@ -418,7 +447,7 @@ COMPONENT monityt = Monitor_nD(
   AT (0, 0, 0) RELATIVE PREVIOUS
 
 COMPONENT monit_before_monocr5 = Monitor_nD(
-    xwidth =  0.15, yheight = 0.25, options = "x", bins=100)
+    xwidth =  0.15, yheight = 0.25, options = "x y", bins=100)
   AT (0, 0, 0.001) RELATIVE PREVIOUS
 
 COMPONENT monit_before_monocr6 = Monitor_nD(
@@ -690,4 +719,5 @@ COMPONENT Polarizer2 = Pol_bender(
     xwidth = g_w, yheight = 0.2, length = L_V/2, radius = -R_SB,
     nslit = n_SB, d = 0.0003, endFlat = 1, drawOption = 1)
   AT (L_V/2*cos(((180-180/PI/R_SB*L_V/2)/2)*DEG2RAD), 0,L_V/2+0.001) RELATIVE PREVIOUS
+
 */
