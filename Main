@@ -126,16 +126,7 @@ INITIALIZE
 %{
 lambda_min = 1.75;
 lambda_max = 6.25;
-R=pow((12-l_tapering)/1.4,2)/8/g_w*number_channels;
-//L=12-l_tapering-Length_VV;
 L=12-l_tapering;
-//v_cavity
-//Length_V=Length_VV/NV;
-ldm = Lam-dLam;  
-ldx = Lam+dLam;  
-W=g_w;
-D_W = 1.2*W; 
-D_H = 1.2*H; 
 %}
 
 TRACE
@@ -145,31 +136,17 @@ AT (0 ,0 , -total_nonoptics_length) ABSOLUTE
 
 /* ******************************* Source *************************************/
 
-COMPONENT Source = Source_gen ( focus_xw =  g_w ,
-focus_yh = channel_height , dist = total_nonoptics_length , I1 = source_I1 ,
-yheight = source_height , xwidth = source_width , verbose = 1 ,
+COMPONENT Source = Source_gen ( focus_xw =  g_w,
+focus_yh = channel_height , dist = total_nonoptics_length , I1 = source_I1,
+yheight = source_height , xwidth = source_width , verbose = 1,
 T1 = source_T1, Lmin = lambda_min, Lmax = lambda_max,
-T2 = source_T2 , I2 = source_I2 , T3 = source_T3 ,
+T2 = source_T2 , I2 = source_I2 , T3 = source_T3,
 I3 = source_I3)
 AT (0 , 0 , -total_nonoptics_length) RELATIVE ABSOLUTE
-
-/* ******************************* make spin for Swiss V-cavity *************************************/
-/*
-COMPONENT makeSpin = Spin_random()  
-  AT (0,0,0.001) RELATIVE Source  
-  ROTATED (0,0,0)  RELATIVE Source  
-
-/* ************************************************************************************************/
 
 COMPONENT Source_arm = Arm(
     )
   AT (0, 0, 0) RELATIVE ABSOLUTE
-
-/*
-COMPONENT monit_source = Monitor_nD(
-    xwidth = g_w, yheight = H, options = "lambda limits=[1.8 6.2]",
-    filename = "source")
-  AT (0, 0, 0.0001) RELATIVE PREVIOUS
 
 /* ******************************* First guide, unchangeable *************************************/
 
@@ -187,10 +164,6 @@ COMPONENT  CG_1 = Guide_gravity(
     w1 = g_w, h1 = H,  l = L, mleft  =mx, mright = mx, mtop = my, mbottom = my,
 nslit = number_channels, d = thickness_of_guide_walls, G = -9.81)
   AT (0, 0, 0) RELATIVE PREVIOUS
-/*
-COMPONENT monit_before_monocr = Monitor_nD(
-    xwidth = g_w, yheight = H, filename = "after_guide", options="lambda limits=[1.8 6.2]")
-  AT (0, 0, L+0.001 ) RELATIVE PREVIOUS
 
 /* ******************************* V-cavity  *************************************/    
 
@@ -208,107 +181,12 @@ COMPONENT Polarizer = Pol_guide_vmirror(
     rDownPar ={1, 0.0137, 0, 1.2, 0.001})
   AT (0, 0, 0.001) RELATIVE a_POL
 
-/* ******************************* 1_6  *************************************/    
-/*
-COMPONENT Polarizer = Pol_guide_vmirror(
-    xwidth = g_w/6, yheight = H,
-    length = L_V, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*5/12, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-COMPONENT Polarizer2 = Pol_guide_vmirror(
-    xwidth = g_w/6, yheight = H,
-    length = L_V, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*3/12, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-COMPONENT Polarizer3 = Pol_guide_vmirror(
-    xwidth = g_w/6, yheight = H,
-    length = L_V, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*1/12, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-COMPONENT Polarizer4 = Pol_guide_vmirror(
-    xwidth = g_w/6, yheight = H,
-    length = L_V, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*-1/12, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-COMPONENT Polarizer11 = Pol_guide_vmirror(
-    xwidth = g_w/6, yheight = H,
-    length = L_V, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*-3/12, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-COMPONENT Polarizer12 = Pol_guide_vmirror(
-    xwidth = g_w/6, yheight = H,
-    length = L_V, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*-5/12, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-/********************************* Pol bender ************************/
-/*
-COMPONENT Polarizer = Pol_bender(
-    rTopUpPar = {1, 0.02174, 2.9, 3.0, 0.001},
-    rTopDownPar = {1, 0.01316,0, 1.1, 0.001},
-    xwidth = g_w, yheight = H, length = L_V/2, radius = R_SB,
-    nslit = n_SB, d = 0.0003, endFlat = 1, drawOption = 1)
-  AT (0, 0, 0) RELATIVE PREVIOUS
-
-COMPONENT Polarizer2 = Pol_bender(
-    rTopUpPar = {1, 0.02174, 2.9, 3.0, 0.001},
-    rTopDownPar = {1, 0.01316,0, 1.1, 0.001},
-    xwidth = g_w, yheight = H, length = L_V/2, radius = -R_SB,
-    nslit = n_SB, d = 0.0003, endFlat = 1, drawOption = 1)
-  AT (L_V/2*cos(((180-180/PI/R_SB*L_V/2)/2)*DEG2RAD), 0,L_V/2+0.001) RELATIVE PREVIOUS
-
-//180/PI/14.06*L_V/2
-/********************************* Swiss both sides coated with FeSi m=5.0 ************************/
-/*
-COMPONENT  cavity  = Transmission_V_polarisator(
-			    w1=g_w, h1=H, w2=g_w, h2=H, l=L_V,  
-                                              waferD=0.0003, FeD= 2*d_Fe,  
-                                              Si_i=0.2, Si_a=0.215, 
-                                              R0=0.99, Qc=0.02174, alpha=3.6, W=0.001,  
-                                              mleft=m_hori, mright=m_hori, mtop=m_vert, mbottom=m_vert,  
-                                              reflectUP="FeSi_m50_up_R2.dat",reflectDW="FeSi_m50_down_R2.dat")  
-  AT (0,0,0.00001)      RELATIVE PREVIOUS
-
 /**********************************arm**************************************************/
 /*
 COMPONENT armLambdaStop = Arm()  
      AT (0, 0, 0.002+L_V)   
      RELATIVE a_POL
  
-/**********************************monitors after cavity**************************************************/
-/*
-COMPONENT monn = Monitor_nD(
-    xwidth = W, yheight = H, bins = 100, options = "x y")
-  AT (0, 0, 0.01) RELATIVE PREVIOUS
-/*
-COMPONENT monit_before_monocr2 = Monitor_nD(
-    xwidth = g_w, yheight = H, filename = "v_cavity_lambda", options="lambda limits=[1.8 6.2]")
-  AT (0, 0, 0.001 ) RELATIVE PREVIOUS
-
-
 /* ******************************* Elliptical guide  *************************************/    
 
 COMPONENT CG_tap = Guide_tapering(
@@ -333,21 +211,14 @@ COMPONENT monit_slit_lambda = Monitor_nD(
 
 /*
 COMPONENT monit_slit_lambda = Monitor_nD(
-    xwidth = width_slit, yheight = H, filename = "virtual_source", options="lambda limits=[1.8 6.2]")
+    xwidth = width_slit, yheight = H, filename = "virtual_source", options="lambda limits=[1.8 6.2]", bins = 100)
   AT (0, 0, l_focus_tapering+l_tapering+0.01) RELATIVE CG_tap
 
-/*
-COMPONENT MPLMon2Y =  
-MeanPolLambda_monitor(xwidth=D_W, yheight=D_H,  
-		      nL=100,  Lmin = Lam-dLam-1, Lmax = Lam+dLam+1,   
-		      mx=0, my=-1, mz=0, filename="MPLMon2Y.data")  
-  AT (0, 0, l_focus_tapering+l_tapering+0.011) RELATIVE CG_tap
-*/
 /*
 COMPONENT monit_slit_x = Monitor_nD(
     xwidth =  g_w+0.02, yheight = 0.25, options = "x", bins=100)
   AT (0, 0, distance+l_tapering+0.01) RELATIVE CG_tap
-/*
+
 COMPONENT monit_slit_xy = Monitor_nD(
     xwidth =  g_w, yheight = 0.25, options = "x y", bins=100)
   AT (0, 0, 0.001) RELATIVE PREVIOUS
@@ -359,6 +230,14 @@ COMPONENT monit_slit_dx = Monitor_nD(
 COMPONENT monit_slit_dy = Monitor_nD(
     xwidth =  width_slit, yheight = H, options = "dy", bins=100)
   AT (0, 0, 0001) RELATIVE PREVIOUS
+
+/*
+COMPONENT MPLMon2Y =  
+MeanPolLambda_monitor(xwidth=D_W, yheight=D_H,  
+		      nL=100,  Lmin = Lam-dLam-1, Lmax = Lam+dLam+1,   
+		      mx=0, my=-1, mz=0, filename="MPLMon2Y.data")  
+  AT (0, 0, l_focus_tapering+l_tapering+0.011) RELATIVE CG_tap
+*/
 
 /* ******************************* Slit  *************************************/    
 
@@ -413,19 +292,19 @@ COMPONENT monit = Monitor_nD(
     xwidth = 0.01, yheight = 0.01, filename = "sampleE", options="energy limits[8.5 9.5]", bins=20)
   AT (0, 0, VS2) RELATIVE PREVIOUS
 /*
-COMPONENT monityt = Monitor_nD(
+COMPONENT monit_sample_E = Monitor_nD(
     xwidth = 0.01, yheight = 0.01, filename = "sampleE2", options="energy limits[5 15]")
   AT (0, 0, 0) RELATIVE PREVIOUS
 
-COMPONENT monit_before_monocr5 = Monitor_nD(
+COMPONENT monit_sample_x = Monitor_nD(
     xwidth =  0.15, yheight = 0.25, options = "x", bins=100)
   AT (0, 0, 0.001) RELATIVE PREVIOUS
 
-COMPONENT monit_before_monocr6 = Monitor_nD(
+COMPONENT monit_sample_dx = Monitor_nD(
     xwidth =  width_slit, yheight = 0.2, options = "dx", bins=100)
   AT (0, 0, 0) RELATIVE PREVIOUS
 
-COMPONENT monit_before_monocr7 = Monitor_nD(
+COMPONENT monit_sample_dy = Monitor_nD(
     xwidth =  width_slit, yheight = 0.2, options = "dy", bins=100)
   AT (0, 0, 0) RELATIVE PREVIOUS
 
@@ -440,28 +319,17 @@ EXTEND
      if (!SCATTERED) ABSORB;
 %}
 
+/* ******************************* Analyser  *************************************/
+/*
 COMPONENT monit_analyz = Monitor_nD(
     xwidth = 0.25, yheight = 0.25, filename = "analyz", options="lambda limits=[2.8 3.3]",bins=20)
   AT (0, 0, 0.5) RELATIVE PREVIOUS
-/*
-COMPONENT monit_E = Monitor_nD(
-    xwidth = 0.2, yheight = 0.2, filename = "alalyzE", options="energy limits[8 11]", bins = 50)
-  AT (0, 0, 0.1) RELATIVE PREVIOUS
-*/
-/*
-COMPONENT mmmg = Monitor_nD(
-    xwidth = 0.2, yheight = 0.2, bins = 50,
-    options = "kz limits[0 10]")
-  AT (0, 0, 0) RELATIVE PREVIOUS
 */
 
-
-/* ******************************* Analyser  *************************************/    
 /*
 COMPONENT mon_IN_an = Arm(
     )
   AT (0, 0, 0.601) RELATIVE sample
- 
 
 COMPONENT mon_curv_an = Monochromator_curved(
     zwidth = 0.01, yheight = 0.01, NH = n_analys, NV = n_analys, DM = d_lattice_parameter,mosaic = mosaic,
@@ -511,183 +379,3 @@ FINALLY
 %}
 
 END
-
-//BONUS
-
-
-/* ******************************* 2_8  *************************************/    
-/*
-COMPONENT Polarizer = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*7/16, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-
-COMPONENT Polarizer2 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*5/16, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-COMPONENT Polarizer3 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*3/16, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-COMPONENT Polarizer4 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*1/16, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-
-COMPONENT Polarizer11 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*-1/16, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-COMPONENT Polarizer12 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*-3/16, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-COMPONENT Polarizer13 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*-5/16, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-COMPONENT Polarizer14 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*-7/16, 0, 0.001) RELATIVE a_POL
-GROUP cavit
-
-COMPONENT Polarizer5 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*7/16, 0, L_V/2+0.0001) RELATIVE a_POL
-GROUP cavit2
-
-COMPONENT Polarizer6 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*5/16, 0, L_V/2+0.0001) RELATIVE a_POL
-GROUP cavit2
-
-COMPONENT Polarizer7 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*3/16, 0, L_V/2+0.0001) RELATIVE a_POL
-GROUP cavit2
-
-COMPONENT Polarizer8 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*1/16, 0, L_V/2+0.0001) RELATIVE a_POL
-GROUP cavit2
-
-COMPONENT Polarizer21 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*-1/16, 0, L_V/2+0.0001) RELATIVE a_POL
-GROUP cavit2
-
-COMPONENT Polarizer22 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*-3/16, 0, L_V/2+0.0001) RELATIVE a_POL
-GROUP cavit2
-
-COMPONENT Polarizer23 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*-5/16, 0, L_V/2+0.0001) RELATIVE a_POL
-GROUP cavit2
-
-COMPONENT Polarizer24 = Pol_guide_vmirror(
-    xwidth = g_w/8, yheight = 0.2,
-    length = L_V/2, debug=0, 		  
-    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
-    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
-    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
-  AT (g_w*-7/16, 0, L_V/2+0.0001) RELATIVE a_POL
-GROUP cavit2
-*/    
-/*
-
-COMPONENT Polarizer = Pol_bender(
-    rTopUpPar = {0.97, 0.0219, 6.07, 1.0, 0.003},
-    rTopDownPar = {0.97, 0.0219, 6.07, 1.0, 0.003},
-    rBotUpPar = {0.97, 0.0219, 6.07, 1.0, 0.003},
-    rBotDownPar = {0.97, 0.0219, 6.07, 1.0, 0.003},
-    rLeftUpPar = {0.995, 2.13*0.0219, 13.87, 2.13, 0.00187},
-    rLeftDownPar = {0.995, 0, 6.32, 2, 0.0089},
-    rRightUpPar = {0.995, 2.13*0.0219, 13.87, 2.13, 0.00187},
-    rRightDownPar = {0.995, 0, 6.32, 2, 0.0089},
-    xwidth = g_w, yheight = 0.2, length = L_V/2, radius = R_SB,
-    nslit = n_SB, d = 0, endFlat = 1, drawOption = 1)
-  AT (0, 0, 0) RELATIVE PREVIOUS
-
-COMPONENT Polarizer2 = Pol_bender(
-    rTopUpPar = {0.97, 0.0219, 6.07, 1.0, 0.003},
-    rTopDownPar = {0.97, 0.0219, 6.07, 1.0, 0.003},
-    rBotUpPar = {0.97, 0.0219, 6.07, 1.0, 0.003},
-    rBotDownPar = {0.97, 0.0219, 6.07, 1.0, 0.003},
-    rLeftUpPar = {0.995, 2.13*0.0219, 13.87, 2.13, 0.00187},
-    rLeftDownPar = {0.995, 0, 6.32, 2, 0.0089},
-    rRightUpPar = {0.995, 2.13*0.0219, 13.87, 2.13, 0.00187},
-    rRightDownPar = {0.995, 0, 6.32, 2, 0.0089},
-    xwidth = g_w, yheight = 0.2, length = L_V/2, radius = -R_SB,
-    nslit = n_SB, d = 0.0003, endFlat = 1, drawOption = 1)
-  AT (L_V/2*cos(((180-180/PI/R_SB*L_V/2)/2)*DEG2RAD), 0,L_V/2+0.001) RELATIVE PREVIOUS
-*/
