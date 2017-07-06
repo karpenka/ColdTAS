@@ -1,0 +1,175 @@
+# Format: data with text headers
+# URL: http://ifit.mccode.org
+# Creator: iFit/@iData/saveas - 1.8-4 iFit/iData (Apr. 22, 2016) by E.Farhi, P. Willendrup and Y.Debab, (c) ILL/DS/CS <farhi@ill.eu> EUPL. $Date$
+# Title: cold_TAS.instr: g_w H l_tapering lambda dRH dRV
+# Label: cold_TAS.instr
+# DisplayName: 
+# User: student
+# CreationDate: 06-Jul-2017 15:28:56
+# ModificationDate: 06-Jul-2017 15:28:56
+# Tag: iD372881
+# Type: 2D data set [9 9]
+# iData size 9  9: iData_str
+# iData_str Tag: iD372881
+# iData_str Title: cold_TAS.instr: g_w H l_tapering lambda dRH dRV
+# iData_str Source: /home/student/mirror/Kireenko/Dropbox/McStas/guide/06.07
+# iData_str Creator: 1.8-4 iFit/iData (Apr. 22, 2016) by E.Farhi, P. Willendrup and Y.Debab, (c) ILL/DS/CS <farhi@ill.eu> EUPL. $Date$
+# iData_str User: student
+# double size 1  6: iData_str Date
+2017              7              6             15             28      56.798191
+# double size 1  6: iData_str ModificationDate
+2017              7              6             15             28      56.798147
+# iData_str Command: iData([15019140 55059890.0178477 95687184 94883710.217459 71375280.0000311 49348560 35462570.0000014 42446600 40886610 47096963.56486])
+# iData_str Command: iD372881=setalias(iD372881, ''g_w'', 0.07 , ''''); % <iData iD372881 /home/student/mirror/Kireenko/Dropbox/McStas/guide/06.07> 
+# iData_str Command: iD372881=setalias(iD372881, ''H'', 0.2 , ''''); % <iData iD372881 /home/student/mirror/Kireenko/Dropbox/McStas/guide/06.07> 
+# iData_str Command: iD372881=setalias(iD372881, ''l_tapering'', 2 , ''''); % <iData iD372881 /home/student/mirror/Kireenko/Dropbox/McStas/guide/06.07> 
+# iData_str Command: iD372881=setalias(iD372881, ''lambda'', 3 , ''''); % <iData iD372881 /home/student/mirror/Kireenko/Dropbox/McStas/guide/06.07> 
+# iData_str Command: iD372881=setalias(iD372881, ''dRH'', 0.5 0.75 1 1.25 1.5 1.75 2 2.25 2.5 , ''''); % <iData iD372881 /home/student/mirror/Kireenko/Dropbox/McStas/guide/06.07> 
+# iData_str Command: iD372881=setalias(iD372881, ''dRV'', 0.5 0.75 1 1.25 1.5 1.75 2 2.25 2.5 , ''''); % <iData iD372881 /home/student/mirror/Kireenko/Dropbox/McStas/guide/06.07> 
+# iData_str Command: iD372881=setalias(iD372881, ''Criteria'', 1 2 3 4 5 6 7 8 9 , ''Monitor index''); % <iData iD372881 /home/student/mirror/Kireenko/Dropbox/McStas/guide/06.07> 
+# iData_str Command: iD372881=setalias(iD372881, ''Parameters'', ''Data.Parameters'', ''Instrument parameters''); % <iData iD372881 /home/student/mirror/Kireenko/Dropbox/McStas/guide/06.07> 
+# iData_str Command: iD372881=setalias(iD372881, ''Execute'', ''Data.Execute'', ''Command line used for Mcstas execution''); % <iData iD372881 /home/student/mirror/Kireenko/Dropbox/McStas/guide/06.07> 
+# iData_str Command: iD372881=setalias(iD372881, ''Options'', ''Data.Options'', ''Options used for Mcstas execution''); % <iData iD372881 /home/student/mirror/Kireenko/Dropbox/McStas/guide/06.07> 
+# iData_str Label: cold_TAS.instr
+# double size 9  9: iData_str Data Signal
+       15019140       47096963.56486             73997360            130408130         229865761.75            254936270            244213670            244281760            196052780
+55059890.017848            120917660            184666370            310075849            539618320            633140750            605266690            564546580            481641620
+       95687184            193036937       310184899.7969          526417967.4            919461280         1118226102.6         1079308781.9            929718913            819098550
+94883710.217459      156812982.01844            258783950            431542160            698413780           1031036085            861688600            815775750            714859600
+71375280.000031            123024170            211682560            356327701            542414920            765553500            713030890            584169860            598196730
+       49348560          109778306.3            160508800            310392040          498465783.3            701520480            658413070            552687700            511354800
+35462570.000001             66370450            173573100            252039840            472772890            576056530            583128000            518872200            456309430
+       42446600             86603600            142706980            265073830            408043030            560447100            556536250            432066300            411330540
+       40886610           77918106.9            126487980            230416990            377449070            509793500            473665470            416852040            329569500
+# double size 9  9: iData_str Data Criteria
+       15019140       47096963.56486             73997360            130408130         229865761.75            254936270            244213670            244281760            196052780
+55059890.017848            120917660            184666370            310075849            539618320            633140750            605266690            564546580            481641620
+       95687184            193036937       310184899.7969          526417967.4            919461280         1118226102.6         1079308781.9            929718913            819098550
+94883710.217459      156812982.01844            258783950            431542160            698413780           1031036085            861688600            815775750            714859600
+71375280.000031            123024170            211682560            356327701            542414920            765553500            713030890            584169860            598196730
+       49348560          109778306.3            160508800            310392040          498465783.3            701520480            658413070            552687700            511354800
+35462570.000001             66370450            173573100            252039840            472772890            576056530            583128000            518872200            456309430
+       42446600             86603600            142706980            265073830            408043030            560447100            556536250            432066300            411330540
+       40886610           77918106.9            126487980            230416990            377449070            509793500            473665470            416852040            329569500
+# iData_str Data Execute: mcrun cold_TAS.instr --ncount=10000000 --dir=/home/student/mirror/Kireenko/McStas/guide/01.6/test33//0/0 --mpi=12 g_w=0.07 H=0.2 l_tapering=2 lambda=3 dRH=0.5 dRV=0.5
+# double size 1  1: iData_str Data Options ncount
+10000000
+# double size 1  1: iData_str Data Options mpi
+12
+# iData_str Data Options dir: /home/student/mirror/Kireenko/McStas/guide/01.6/test33/
+# double size 1  1: iData_str Data Options overwrite
+1
+# iData_str Data Options instrument: cold_TAS.instr
+# iData_str Data Options mode: simulate
+# iData_str Data Options particle: n
+# iData_str Data Options mcrun: mcrun
+# iData_str Data Options mcdisplay: mcdisplay
+# iData_str Data Options variable_names: g_w
+# iData_str Data Options variable_names: H
+# iData_str Data Options variable_names: l_tapering
+# iData_str Data Options variable_names: lambda
+# iData_str Data Options variable_names: dRH
+# iData_str Data Options variable_names: dRV
+# double size 1  1: iData_str Data Options variable_pars{1}
+0.07
+
+# double size 1  1: iData_str Data Options variable_pars{2}
+0.2
+
+# double size 1  1: iData_str Data Options variable_pars{3}
+2
+
+# double size 1  1: iData_str Data Options variable_pars{4}
+3
+
+# double size 9  1: iData_str Data Options variable_pars{5}
+ 0.5
+0.75
+   1
+1.25
+ 1.5
+1.75
+   2
+2.25
+ 2.5
+
+# double size 9  1: iData_str Data Options variable_pars{6}
+ 0.5
+0.75
+   1
+1.25
+ 1.5
+1.75
+   2
+2.25
+ 2.5
+
+# double size 1  6: iData_str Data Options scan_size
+1  1  1  1  9  9
+# iData_str Alias Names: Signal
+# iData_str Alias Names: Error
+# iData_str Alias Names: Monitor
+# iData_str Alias Names: g_w
+# iData_str Alias Names: H
+# iData_str Alias Names: l_tapering
+# iData_str Alias Names: lambda
+# iData_str Alias Names: dRH
+# iData_str Alias Names: dRV
+# iData_str Alias Names: Criteria
+# iData_str Alias Names: Parameters
+# iData_str Alias Names: Execute
+# iData_str Alias Names: Options
+# iData_str Alias Values{1}: Data.Signal
+
+
+
+# double size 1  1: iData_str Alias Values{4}
+0.07
+
+# double size 1  1: iData_str Alias Values{5}
+0.2
+
+# double size 1  1: iData_str Alias Values{6}
+2
+
+# double size 1  1: iData_str Alias Values{7}
+3
+
+# double size 9  1: iData_str Alias Values{8}
+ 0.5
+0.75
+   1
+1.25
+ 1.5
+1.75
+   2
+2.25
+ 2.5
+
+# double size 9  1: iData_str Alias Values{9}
+ 0.5
+0.75
+   1
+1.25
+ 1.5
+1.75
+   2
+2.25
+ 2.5
+
+# double size 1  9: iData_str Alias Values{10}
+1  2  3  4  5  6  7  8  9
+
+# iData_str Alias Values{11}: Data.Parameters
+
+# iData_str Alias Values{12}: Data.Execute
+
+# iData_str Alias Values{13}: Data.Options
+
+# iData_str Alias Labels: Data Signal
+# iData_str Alias Labels: Error on Signal
+# iData_str Alias Labels: Monitor (weight)
+# iData_str Alias Labels: Monitor index
+# iData_str Alias Labels: Instrument parameters
+# iData_str Alias Labels: Command line used for Mcstas execution
+# iData_str Alias Labels: Options used for Mcstas execution
