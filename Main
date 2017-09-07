@@ -26,7 +26,7 @@
 *
 * %End
 *******************************************************************************/
-DEFINE INSTRUMENT test1 (lambda=3,l_tapering=2, g_w=0.07,H=0.2)
+DEFINE INSTRUMENT test1 (lambda=3,l_tapering=2, g_w=0.07,H=0.2,n_s)
 
 DECLARE
 %{
@@ -45,7 +45,6 @@ double channel_height = 0.2;
 double total_nonoptics_length = 1.820;
 
 //first guide, unchangeable
-double height_first_guide=0.2;
 double length_first_guide=5;
 double m_first_guide=3;
 
@@ -65,7 +64,9 @@ double m_tapering_y=5;
 //double g_w=0.0685;
 
 //selector
-double width_selector=0.07;
+//double width_selector=0.07;
+double r_s = 0.12;
+//double n_s = 30;
 
 //monochromator
 double n_monochr=30;
@@ -86,8 +87,6 @@ double d=0.001;
 double number_channels=1;
 //double l_tapering=1.7;4.7
 double l_focus_tapering=0.3;
-double m_guide_left=4;
-double m_guide_right=4;
 //double lambda=3;
 double d_lattice_parameter=3.355;
 double VS=2;
@@ -126,9 +125,9 @@ double distance = 0.35;
 
 INITIALIZE
 %{
-lambda_min = 1.75;
-lambda_max = 6.25;
-L=12-l_tapering;
+lambda_min = 1.9;
+lambda_max = 6.1;
+L=10;
 RH = -dRH*2*VS2*d_lattice_parameter/lambda;
 RV=-dRV*VS2*lambda/2/d_lattice_parameter;
 %}
@@ -152,12 +151,13 @@ COMPONENT Source_arm = Arm(
     )
   AT (0, 0, 0) RELATIVE ABSOLUTE
 
+
 /* ******************************* First guide, unchangeable *************************************/
 
 COMPONENT CG_0 = Guide_gravity(
-    w1 =g_w, h1 = height_first_guide, l = length_first_guide, mleft  =mx, mright = mx, mtop = my, mbottom = my,
+    w1 =g_w, h1 = H, l = length_first_guide, mleft  =mx, mright = mx, mtop = my, mbottom = my,
     G = -9.81)
-  AT (0, 0, 0) RELATIVE PREVIOUS
+  AT (0, 0, 0.0000001) RELATIVE PREVIOUS
 
 /* ******************************* Guide  *************************************/
 
@@ -192,45 +192,61 @@ COMPONENT armLambdaStop = Arm()
      RELATIVE a_POL
  
 /* ******************************* Elliptical guide  *************************************/    
-
+//elliptical
+//parabolical
+//straight
 COMPONENT CG_tap = Guide_tapering(
-    option = "elliptical", w1 = g_w, h1 = H, l = l_tapering,
-    linw = l_focus_left, loutw = l_focus_tapering, mx = m_tapering_x,my=m_tapering_y)
+    option = "straight", w1 = g_w, h1 = H, l = l_tapering,
+    //linw = l_focus_left, 
+    loutw = l_focus_tapering, 
+    //linh=0, louth=0,
+    mx = m_tapering_x,my=m_tapering_y)
   AT (0, 0, 0.01) RELATIVE PREVIOUS
 
 
 /* ******************************* V-selector  *************************************/    
 /*
 COMPONENT v_selec = V_selector(
-    xwidth = width_selector, yheight = H, zdepth = 0.3, radius = 0.3,
+    xwidth = g_w, yheight = H, zdepth = 0.3, radius = r_s,
     alpha = 48.298, length = 0.25, d = 0.0004,
-    nu = 3956*48.298*DEG2RAD/2/PI/lambda/0.25, nslit = 72)
+    nu = 3956*48.298*DEG2RAD/2/PI/lambda/0.25, nslit = n_s)
   AT (0, 0, 0.15+ l_tapering) RELATIVE PREVIOUS
 
+
+/* ******************************* Slit  *************************************/    
+
+COMPONENT slit_VS = Slit(
+    xwidth = width_slit, yheight = H)
+  AT (0, 0, l_focus_tapering+l_tapering+0.01) RELATIVE CG_tap
+
+
 /* ******************************* Monitors on Virtual Source  *************************************/    
+
+COMPONENT monit_slit_lambda = Monitor_nD(
+    xwidth = width_slit, yheight = 0.2, filename = "virtual_source_lambda", options="lambda limits=[2 6]", bins = 100)
+  AT (0, 0,0.001) RELATIVE PREVIOUS
+
+COMPONENT monit_slit_dx = Monitor_nD(
+    xwidth =  width_slit, yheight = 0.2, options = "dx", bins=100)
+  AT (0, 0, 0001) RELATIVE PREVIOUS
+
 /*
 COMPONENT monit_slit_lambda = Monitor_nD(
     xwidth = width_slit, yheight = H, filename = "virtual_source", options="lambda limits=[2.5 3.5]",bins = 50)
   AT (0, 0, l_focus_tapering+l_tapering+0.01) RELATIVE CG_tap
-
-/*
-COMPONENT monit_slit_lambda = Monitor_nD(
-    xwidth = width_slit, yheight = H, filename = "virtual_source", options="lambda limits=[1.8 6.2]", bins = 100)
-  AT (0, 0, l_focus_tapering+l_tapering+0.01) RELATIVE CG_tap
+*/
 
 /*
 COMPONENT monit_slit_x = Monitor_nD(
     xwidth =  g_w+0.02, yheight = 0.25, options = "x", bins=100)
   AT (0, 0, distance+l_tapering+0.01) RELATIVE CG_tap
-
+*/
 COMPONENT monit_slit_xy = Monitor_nD(
-    xwidth =  g_w, yheight = 0.25, options = "x y", bins=100)
+    xwidth =  g_w+0.04, yheight = 0.25, options = "x y", bins=100)
   AT (0, 0, 0.001) RELATIVE PREVIOUS
 
-COMPONENT monit_slit_dx = Monitor_nD(
-    xwidth =  width_slit, yheight = H, options = "dx", bins=100)
-  AT (0, 0, 0001) RELATIVE PREVIOUS
 
+/*
 COMPONENT monit_slit_dy = Monitor_nD(
     xwidth =  width_slit, yheight = H, options = "dy", bins=100)
   AT (0, 0, 0001) RELATIVE PREVIOUS
@@ -243,15 +259,7 @@ MeanPolLambda_monitor(xwidth=D_W, yheight=D_H,
   AT (0, 0, l_focus_tapering+l_tapering+0.011) RELATIVE CG_tap
 */
 
-/* ******************************* Slit  *************************************/    
-
-COMPONENT slit_VS = Slit(
-    xwidth = width_slit, yheight = H)
-  AT (0, 0, l_focus_tapering+l_tapering+0.01) RELATIVE CG_tap
-
-
 /* ******************************* Monochromator  *************************************/     
-
 
 COMPONENT mon_IN = Arm(
     )
@@ -289,12 +297,19 @@ COMPONENT mon_OUT = Arm(
   ROTATED (0, -2*asin(lambda/2/d_lattice_parameter)*RAD2DEG, 0) RELATIVE CG_tap
 
 COMPONENT monit_sample_position = Monitor_nD(
-    xwidth = 0.02, yheight = 0.02, filename = "sample", options="lambda limits=[2.8 3.2]",bins=35)
+    xwidth = 0.01, yheight = 0.01, filename = "sample", options="lambda limits=[2.95 3.1]",bins=20)
   AT (0, 0, VS) RELATIVE PREVIOUS
+
 /*
 COMPONENT monit = Monitor_nD(
-    xwidth = 0.02, yheight = 0.02, filename = "sampleE", options="energy limits[8.5 9.5]", bins=35)
-  AT (0, 0, VS) RELATIVE PREVIOUS
+    xwidth = 0.01, yheight = 0.01, filename = "sampleE", options="energy limits[8 10]", bins=20)
+  AT (0, 0, VS+0.0001) RELATIVE PREVIOUS
+*/
+
+COMPONENT monit_sample_dx = Monitor_nD(
+    xwidth =  0.15, yheight = 0.25, options = "dx", bins=100)
+  AT (0, 0, 0.00001) RELATIVE PREVIOUS
+
 /*
 COMPONENT monit_sample_E = Monitor_nD(
     xwidth = 0.01, yheight = 0.01, filename = "sampleE2", options="energy limits[5 15]")
@@ -304,9 +319,15 @@ COMPONENT monit_sample_x = Monitor_nD(
     xwidth =  0.15, yheight = 0.25, options = "x", bins=100)
   AT (0, 0, 0.001) RELATIVE PREVIOUS
 
-COMPONENT monit_sample_dx = Monitor_nD(
-    xwidth =  width_slit, yheight = 0.2, options = "dx", bins=100)
-  AT (0, 0, 0) RELATIVE PREVIOUS
+COMPONENT monit_sample_y = Monitor_nD(
+    xwidth =  0.15, yheight = 0.25, options = "y", bins=100)
+  AT (0, 0, 0.001) RELATIVE PREVIOUS
+
+COMPONENT monit_sample_x_y = Monitor_nD(
+    xwidth =  0.3, yheight = 0.4, options = "x y", bins=100)
+  AT (0, 0, 0.001) RELATIVE PREVIOUS
+
+
 
 COMPONENT monit_sample_dy = Monitor_nD(
     xwidth =  width_slit, yheight = 0.2, options = "dy", bins=100)
