@@ -721,3 +721,250 @@ COMPONENT Polarizer2 = Pol_bender(
   AT (L_V/2*cos(((180-180/PI/R_SB*L_V/2)/2)*DEG2RAD), 0,L_V/2+0.001) RELATIVE PREVIOUS
 
 */
+
+
+/*1-6*/
+/*
+COMPONENT Polarizer = Pol_guide_vmirror(
+    xwidth = g_w/6, yheight = H,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*5/12, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer2 = Pol_guide_vmirror(
+    xwidth = g_w/6, yheight = H,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*3/12, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer3 = Pol_guide_vmirror(
+    xwidth = g_w/6, yheight = H,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*1/12, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer4 = Pol_guide_vmirror(
+    xwidth = g_w/6, yheight = H,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-1/12, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer11 = Pol_guide_vmirror(
+    xwidth = g_w/6, yheight = H,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-3/12, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer12 = Pol_guide_vmirror(
+    xwidth = g_w/6, yheight = H,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-5/12, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+/* ******************************* 2-8  *************************************/    
+/*
+COMPONENT Polarizer = Pol_guide_vmirror(
+    xwidth = g_w/8, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*7/16, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+
+COMPONENT Polarizer2 = Pol_guide_vmirror(
+    xwidth = g_w/8, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*5/16, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer3 = Pol_guide_vmirror(
+    xwidth = g_w/8, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*3/16, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer4 = Pol_guide_vmirror(
+    xwidth = g_w/8, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*1/16, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+
+COMPONENT Polarizer11 = Pol_guide_vmirror(
+    xwidth = g_w/8, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-1/16, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer12 = Pol_guide_vmirror(
+    xwidth = g_w/8, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-3/16, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer13 = Pol_guide_vmirror(
+    xwidth = g_w/8, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-5/16, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer14 = Pol_guide_vmirror(
+    xwidth = g_w/8, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-7/16, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+
+/* *******************************1-12  *************************************/    
+/*
+COMPONENT Polarizer = Pol_guide_vmirror(
+    xwidth = g_w/12, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*11/24, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+
+COMPONENT Polarizer2 = Pol_guide_vmirror(
+    xwidth = g_w/12, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*9/24, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer3 = Pol_guide_vmirror(
+    xwidth = g_w/12, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*7/24, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer4 = Pol_guide_vmirror(
+    xwidth = g_w/12, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*5/24, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer5 = Pol_guide_vmirror(
+    xwidth = g_w/12, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*3/24, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer6 = Pol_guide_vmirror(
+    xwidth = g_w/12, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*1/24, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+
+COMPONENT Polarizer7 = Pol_guide_vmirror(
+    xwidth = g_w/12, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-1/24, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer8 = Pol_guide_vmirror(
+    xwidth = g_w/12, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-3/24, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer9 = Pol_guide_vmirror(
+    xwidth = g_w/12, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-5/24, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer10 = Pol_guide_vmirror(
+    xwidth = g_w/12, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-7/24, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer11 = Pol_guide_vmirror(
+    xwidth = g_w/12, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-9/24, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+COMPONENT Polarizer12 = Pol_guide_vmirror(
+    xwidth = g_w/12, yheight = 0.2,
+    length = L_V, debug=0, 		  
+    rPar  = {0.99, 0.02174, 3.6, 3, 0.001},
+    rUpPar = {1, 0.0219, 0.6, 5, 0.003},
+    rDownPar ={1, 0.0137, 0, 1.2, 0.001})
+  AT (g_w*-11/24, 0, 0.001) RELATIVE a_POL
+GROUP cavit
+
+
